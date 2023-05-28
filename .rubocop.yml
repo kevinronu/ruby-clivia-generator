@@ -1,0 +1,32 @@
+AllCops:
+  NewCops: enable
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/MutableConstant:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/AbcSize:
+  Max: 30
+
+Style/GlobalVars:
+  Enabled: false
+
+Style/WordArray:
+  EnforcedStyle: brackets
+
+Metrics/CyclomaticComplexity:
+  Max: 15
+
+Style/ClassVars:
+  Enabled: false
