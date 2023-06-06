@@ -31,7 +31,7 @@ class CliviaGenerator
         action = initial_menu
         case action
         when "random" then ask_questions(@first_session)
-        when "scores" then puts scores_table
+        when "scores" then puts print_score_table
         when "exit" then puts "Thanks for using Clivia Generator".colorize(:light_yellow)
         end
       rescue HTTParty::ResponseError => e
