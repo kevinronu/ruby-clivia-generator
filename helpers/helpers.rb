@@ -22,7 +22,7 @@ module Helpers
     input
   end
 
-  def get_answer_option(menu:, options:, correct_answer:)
+  def check_answer(menu:, options:, correct_answer:)
     input = ""
     score = 0
     loop do
@@ -44,9 +44,14 @@ module Helpers
     score
   end
 
-  def initial_menu
-    list_options = ["random", "scores", "exit"]
-    get_with_options(prompt: "", options: list_options)
+  def menu
+    puts "Random | Scores | Exit"
+    input = ""
+    while input.empty?
+      print "> "
+      input = gets.chomp.capitalize
+    end
+    input
   end
 
   def questions_menu(results)
@@ -67,7 +72,7 @@ module Helpers
         menu << element
         options << (index + 1)
       end
-      score += get_with_number_options(menu: menu, options: options, correct_answer: correct_answer)
+      score += check_answer(menu: menu, options: options, correct_answer: correct_answer)
     end
     score
   end

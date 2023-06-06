@@ -3,8 +3,8 @@ require "terminal-table"
 module Presenter
   def print_welcome
     puts ["###################################",
-      "#   Welcome to Clivia Generator   #",
-      "###################################"].join("\n").colorize(:light_yellow)
+          "#   Welcome to Clivia Generator   #",
+          "###################################"].join("\n").colorize(:light_yellow)
   end
 
   def print_score_table

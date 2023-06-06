@@ -25,20 +25,21 @@ class CliviaGenerator
 
   def start
     print_welcome
-    action = ""
-    until action == "exit"
+    action = menu
+    until action == "Exit"
       begin
-        action = initial_menu
         case action
-        when "random" then ask_questions(@first_session)
-        when "scores" then puts print_score_table
-        when "exit" then puts "Thanks for using Clivia Generator".colorize(:light_yellow)
+        when "Random" then ask_questions(@first_session)
+        when "Scores" then puts print_score_table
+        else puts "Invalid Action"
         end
+        action = menu
       rescue HTTParty::ResponseError => e
         parsed_error = JSON.parse(e.message, symbolize_names: true)
         puts parsed_error
       end
     end
+    puts "Thanks for using Clivia Generator".colorize(:light_yellow)
   end
 
   def ask_questions(first_session)
@@ -50,8 +51,9 @@ class CliviaGenerator
     end
     @score = questions_menu(@questions)
     puts "Well done! Your score is #{@score.to_s.colorize(:light_magenta)}\n#{'-' * 50}"
-    option = get_save_with_option(options: "[y, n]")
-    save if option == "y"
+    option = get_with_options(prompt: "Do you want to save your score?", msg: "Invalid option, write only Y or N",
+                              options: ["Y", "N"], capitalize: true)
+    save if option == "Y"
   end
 
   def save
