@@ -1,12 +1,8 @@
 require "htmlentities"
-require "terminal-table"
 
 module Helpers
   def print_options(options)
-    options.each.with_index do |option, index|
-      print "#{index + 1}. #{option.capitalize}      "
-    end
-    puts ""
+    puts options.join(" | ")
   end
 
   def get_with_options(prompt:, options:, msg: "", capitalize: false)
@@ -50,7 +46,7 @@ module Helpers
 
   def initial_menu
     list_options = ["random", "scores", "exit"]
-    get_with_options(menu: list_options, options: list_options)
+    get_with_options(prompt: "", options: list_options)
   end
 
   def questions_menu(results)
@@ -74,21 +70,5 @@ module Helpers
       score += get_with_number_options(menu: menu, options: options, correct_answer: correct_answer)
     end
     score
-  end
-
-  def scores_table
-    table = Terminal::Table.new
-    table.title = "Top Scores".colorize(:light_red)
-    table.headings = ["Name".colorize(:light_blue), "Score".colorize(:light_green)]
-    store = @storefile.map { |element| [element[:name].colorize(:cyan), element[:score]] }
-    table.rows = store.sort_by { |element| -element[1] }
-
-    table
-  end
-
-  def print_welcome
-    puts ["###################################",
-          "#   Welcome to Clivia Generator   #",
-          "###################################"].join("\n").colorize(:light_yellow)
   end
 end
