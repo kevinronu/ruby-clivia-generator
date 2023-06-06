@@ -1,6 +1,12 @@
-require_relative "clivia_generator"
+require_relative "classes/clivia_generator"
 
-# capture command line arguments (ARGV)
+filename = ARGV.shift
 
-trivia = CliviaGenerator.new
+if filename.nil?
+  filename = "scores.json"
+else
+  File.write(filename, "") unless File.exist?(filename)
+end
+
+trivia = CliviaGenerator.new(filename)
 trivia.start
