@@ -1,4 +1,5 @@
 require "htmlentities"
+require "colorize"
 
 module Helpers
   def print_options(options)
@@ -59,17 +60,22 @@ module Helpers
     input
   end
 
-  def show_questions(questions)
+  def decode_string(string:, color: nil)
     coder = HTMLEntities.new
+    string = coder.decode(string)
+    color ? string.colorize(color) : string
+  end
+
+  def show_questions(questions)
     score = 0
     questions.each do |question|
-      puts "Category: #{coder.decode(question[:category].colorize(:light_blue))} " \
-           "| Difficulty: #{coder.decode(question[:difficulty].colorize(:blue))}\n" \
-           "Question: #{coder.decode(question[:question]).colorize(:light_green)}"
-      correct_answer = coder.decode(question[:correct_answer])
+      puts "Category: #{decode_string(string: question[:category], color: :light_blue)} " \
+           "| Difficulty: #{decode_string(string: question[:difficulty], color: :blue)}\n" \
+           "Question: #{decode_string(string: question[:question], color: :light_green)}"
+      correct_answer = decode_string(string: question[:correct_answer])
       array = []
       array << correct_answer
-      question[:incorrect_answers].each { |element| array << coder.decode(element) }
+      question[:incorrect_answers].each { |element| array << decode_string(string: element) }
       array.shuffle!
       options_text = []
       options_numbers = []
