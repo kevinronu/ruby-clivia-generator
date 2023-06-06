@@ -77,7 +77,8 @@ module Helpers
         options_text << element
         options_numbers << (index + 1)
       end
-      score += show_options(options_text: options_text, options_numbers: options_numbers, correct_answer: correct_answer)
+      score += show_options(options_text: options_text, options_numbers: options_numbers,
+                            correct_answer: correct_answer)
     end
     score
   end
