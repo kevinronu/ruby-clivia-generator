@@ -22,26 +22,31 @@ module Helpers
     input
   end
 
-  def check_answer(menu:, options:, correct_answer:)
+  def show_options(options_text:, options_numbers:, correct_answer:)
     input = ""
     score = 0
     loop do
-      menu.each_with_index { |element, index| puts "#{(index + 1).to_s.colorize(:light_cyan)}. #{element}" }
+      options_text.each_with_index { |element, index| puts "#{(index + 1).to_s.colorize(:light_cyan)}. #{element}" }
       print "> "
       input = gets.chomp
-      if options.include?(input.to_i)
-        if menu[input.to_i - 1] == correct_answer
-          puts "Correct!"
-          score += 10
-        else
-          puts "#{menu[input.to_i - 1].colorize(:light_black)}... Incorrect!\n" \
-               "The correct answer was: #{correct_answer.colorize(:red)}"
-        end
+      if options_numbers.include?(input.to_i)
+        score += 10 if check_answer(options_text: options_text, input: input, correct_answer: correct_answer)
         break
       end
       puts "Invalid option, write only the number of the option"
     end
     score
+  end
+
+  def check_answer(options_text:, input:, correct_answer:)
+    if options_text[input.to_i - 1] == correct_answer
+      puts "Correct!"
+      true
+    else
+      puts "#{options_text[input.to_i - 1].colorize(:light_black)}... Incorrect!\n" \
+           "The correct answer was: #{correct_answer.colorize(:red)}"
+      false
+    end
   end
 
   def menu
@@ -54,10 +59,10 @@ module Helpers
     input
   end
 
-  def questions_menu(results)
+  def show_questions(questions)
     coder = HTMLEntities.new
     score = 0
-    results.each do |question|
+    questions.each do |question|
       puts "Category: #{coder.decode(question[:category].colorize(:light_blue))} " \
            "| Difficulty: #{coder.decode(question[:difficulty].colorize(:blue))}\n" \
            "Question: #{coder.decode(question[:question]).colorize(:light_green)}"
@@ -66,13 +71,13 @@ module Helpers
       array << correct_answer
       question[:incorrect_answers].each { |element| array << coder.decode(element) }
       array.shuffle!
-      menu = []
-      options = []
+      options_text = []
+      options_numbers = []
       array.each_with_index do |element, index|
-        menu << element
-        options << (index + 1)
+        options_text << element
+        options_numbers << (index + 1)
       end
-      score += check_answer(menu: menu, options: options, correct_answer: correct_answer)
+      score += show_options(options_text: options_text, options_numbers: options_numbers, correct_answer: correct_answer)
     end
     score
   end

@@ -49,7 +49,7 @@ class CliviaGenerator
     else
       @questions = Sessions.using_session_token(@token)[:results]
     end
-    @score = questions_menu(@questions)
+    @score = show_questions(@questions)
     puts "Well done! Your score is #{@score.to_s.colorize(:light_magenta)}\n#{'-' * 50}"
     option = get_with_options(prompt: "Do you want to save your score?", msg: "Invalid option, write only Y or N",
                               options: ["Y", "N"], capitalize: true)
