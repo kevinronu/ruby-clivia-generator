@@ -38,7 +38,7 @@ To play CLIvia generator, follow these simple steps:
 4. **Run CLIvia generator**: Launch the CLIvia generator application and start managing your schedule:
 
    ```shell
-   ruby app.rb
+   ruby main.rb
    ```
 
 ## CLIvia generator Usage
